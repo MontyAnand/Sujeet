@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WANT TO FIND FACULTY!!!!</title>
+     <link rel="icon" type="image/x-icon" href="logo_iiests.png">
+    <style>
+      .head{
+        display: flex;
+        justify-content: center;
+        margin: 300px;
+      }
+     input[type=search] {
+  width: 250px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url('https://www.w3schools.com/css/searchicon.png');
+  background-position: 10px 10px; 
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+  transition: width 0.4s ease-in-out;
+}
+
+input[type=search]:focus {
+  width: 100%;
+}
+body{
+  background-color: rgb(167, 28, 28)
+}
+input[type=button]{
+  border-radius: 10px;
+}
+    </style>
+  </head>
+  <body>
+    <div class="head">
+    <input type="search" name="search" placeholder="search......" id="item-1" />
+    <input type="button" onclick="myfunction()" id="item-2" value="search" />
+  </div>
+    <script>
+      function myfunction() {
+        let v = document.querySelector("input").value.toLowerCase();
+        if (v == "abhik mukherjee") window.open("abhik.html");
+        else if (v == "apurba sarkar") window.open("apurba.html");
+        else if (v == "ashish kumar layak") window.open("ashish.html");
+        else if (v == "biplab kumar sikdar") window.open("biplab.html");
+        else if (v == "jaya sil") window.open("jaya.html");
+        else if (v == "malay kule") window.open("malya.html");
+        else if (v == "manas hira") window.open("manas.html");
+        else if (v == "nirnay ghosh") window.open("nirnay.html");
+        else if (v == "samit biswas") window.open("samit.html");
+        else if (v == "sekhar mondal") window.open("sekhar.html");
+        else if (v == "sipra das bit") window.open("sipra.html");
+        else if (v == "somnath pal") window.open("somnath.html");
+        else if (v == "sulata mitra") window.open("sulata.html");
+        else if (v == "surajeet") window.open("surajeet.html");
+        else if (v == "susanta") window.open("susanta.html");
+        else if (v == "tamal pal") window.open("tamal.html");
+        else if (v == "asit kumar das") window.open("asit.html");
+      }
+    </script>
+  </body>
+</html>

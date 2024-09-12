@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Faculty Data Display with Autocomplete Search</title>
+  </head>
+  <body  id="body">
+    
+    <div style="display: flex; justify-content: right">
+      <p>Change Theme</p>
+      <input type="color" name="theme" id="color" onchange="theme()" />
+    </div>
+
+    <div id="wholebar" style="display: flex; justify-content: space-around">
+      <div id="searchbar">
+        <h1>Search for a Faculty Member:</h1>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search by name..."
+          autocomplete="off"
+        />
+
+        <div id="autocompleteResults" style="display: none">
+          <ul id="autocompleteList"></ul>
+        </div>
+      </div>
+      <div class="vr" style="border-left: 6px solid black; height: 750px"></div>
+      <div id="showbar">
+        <div id="facultyData" style="display: none">
+          <img
+            src=""
+            alt="Faculty Photo"
+            id="facultyPhoto"
+            style="max-width: 200px"
+          />
+          <h2>Name: <span id="facultyName"></span></h2>
+          <p>Email: <span id="facultyEmail"></span></p>
+          <p>Highest Qualification: <span id="facultyQualification"></span></p>
+          <p>Subjects Teaching in Current Semester:</p>
+          <ul id="facultySubjects"></ul>
+          <p>Research Areas:</p>
+          <ul id="facultyResearchAreas"></ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      const facultyData = [
+        {
+          name: "Dr. Biplab Kumar Sikdar",
+          photographURL: "cst_bksikdar.jpg",
+          email: "biplab@cs.iiests.ac.in",
+          qualification:
+            "PhD from Bengal Engineering and Science University, Shibpur, in 2003.",
+          subjects: [
+            "Computer Architecture and Organization-II(CS3103)-5th semester",
+          ],
+          researchAreas: [
+            "Futuristic Computing",
+            " Cellular Automata Research Group",
+          ],
+        },
+        {
+          name: "Mr. Manas Hira",
+          photographURL: "cst_mhira.jpg",
+          email: "manas@cs.iiests.ac.in",
+          qualification:
+            "M.Tech. (CSE Department, IIT Kharagpur) in the year 1991 ",
+          subjects: ["Microprocessor Based Systems(CS3101)-5th semester"],
+          researchAreas: [
+            "Image Generation and Recognition - A Grammatial Approach.",
+            " Ciircuit Verification using Temporal Logic.",
+          ],
+        },
+        {
+          name: "Dr. Samit Biswas",
+          photographURL: "samit.jpg",
+          email: "samit@cs.iiests.ac.in",
+          qualification: "PhD .",
+          subjects: ["Graph Algorithm(CS3104)-5th semester"],
+          researchAreas: [
+            " Machine Learning and it's Application",
+            "Digital Image Processing and Analysis",
+            "Document Image Analysis",
+            "Image Processing and Pattern Recognition",
+            "Computer Vision",
+            "Machine-based Translation",
+            "Social Network Analysis",
+            "Natural Language Processing and it's Application",
+            "Data Mining and Pattern Recognition",
+          ],
+        },
+        {
+          name: "Dr. Sipra Das Bit",
+          photographURL: "sipra.jpg",
+          email: "sb@cs.iiests.ac.in",
+          qualification:
+            "Ph.D(Engg) from Dept. of Computer Sc. & Engg.from Jadavpur University, Kolkata, 1997.",
+          subjects: ["Database Management System(CS3102)-5th semester"],
+          researchAreas: [
+            "IoT and its usage in Industrial Informatics",
+            "Delay Tolerant Network and its usage in Smart City and Post-disaster management system",
+            "Wireless Sensor Network",
+            "Mobile Computing",
+          ],
+        },
+        {
+          name: "Dr. Tamal Pal",
+          photographURL: "tamal_pal.jpg",
+          email: "tamal@cs.iiests.ac.in",
+          qualification:
+            "Ph.D (Engineering), Computer Science and Technology, IIEST.",
+          subjects: ["Web Technology(CS3122)-5th semester"],
+          researchAreas: [
+            "Games programming",
+            "Wireless Sensor Network",
+            "Multimedia security",
+            "Multimedia communication over wireless network (Wirelessmultimedia sensor network, Delay tolerant network, Vehicular adhoc network etc.)",
+            "Video processing",
+            "Image processing",
+          ],
+        },
+        // Add more faculty members here
+      ];
+
+      const searchInput = document.getElementById("searchInput");
+      const autocompleteResults = document.getElementById(
+        "autocompleteResults"
+      );
+      const autocompleteList = document.getElementById("autocompleteList");
+      const facultyDataDiv = document.getElementById("facultyData");
+      const facultyNameSpan = document.getElementById("facultyName");
+      const facultyPhotoImg = document.getElementById("facultyPhoto");
+      const facultyEmailSpan = document.getElementById("facultyEmail");
+      const facultyQualificationSpan = document.getElementById(
+        "facultyQualification"
+      );
+      const facultySubjectsUl = document.getElementById("facultySubjects");
+      const facultyResearchAreasUl = document.getElementById(
+        "facultyResearchAreas"
+      );
+
+      searchInput.addEventListener("input", updateAutocomplete);
+
+      function updateAutocomplete() {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const matchingFaculty = facultyData.filter((faculty) =>
+          faculty.name.toLowerCase().includes(searchTerm)
+        );
+
+        if (searchTerm === "") {
+          autocompleteResults.style.display = "none";
+          return;
+        }
+
+        autocompleteList.innerHTML = "";
+
+        matchingFaculty.forEach((faculty) => {
+          const listItem = document.createElement("li");
+          listItem.textContent = faculty.name;
+          listItem.addEventListener("click", () => selectFaculty(faculty));
+          autocompleteList.appendChild(listItem);
+        });
+
+        if (matchingFaculty.length > 0) {
+          autocompleteResults.style.display = "block";
+        } else {
+          autocompleteResults.style.display = "none";
+        }
+      }
+
+      function selectFaculty(faculty) {
+        searchInput.value = faculty.name;
+        autocompleteResults.style.display = "none";
+        displayFacultyData(faculty);
+      }
+
+      function displayFacultyData(faculty) {
+        facultyNameSpan.textContent = faculty.name;
+        facultyPhotoImg.src = faculty.photographURL;
+        facultyEmailSpan.textContent = faculty.email;
+        facultyQualificationSpan.textContent = faculty.qualification;
+
+        facultySubjectsUl.innerHTML = "";
+        facultyResearchAreasUl.innerHTML = "";
+
+        faculty.subjects.forEach((subject) => {
+          const li = document.createElement("li");
+          li.textContent = subject;
+          facultySubjectsUl.appendChild(li);
+        });
+
+        faculty.researchAreas.forEach((area) => {
+          const li = document.createElement("li");
+          li.textContent = area;
+          facultyResearchAreasUl.appendChild(li);
+        });
+
+        facultyDataDiv.style.display = "block";
+      }
+      function theme() {
+        let color = document.getElementById("color").value;
+
+        document.getElementById("body").style.backgroundColor = color;
+        if (color[1] == "0")
+          document.getElementById("body").style.color = "white";
+        if (color[1] == "1")
+          document.getElementById("body").style.color = "black";
+        console.log(color);
+      }
+    </script>
+  </body>
+</html>
